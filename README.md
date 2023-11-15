@@ -17,7 +17,7 @@
         "operand2":2
         }'
 
-## Использование API расчута стоимости путешествия
+## Использование API расчета стоимости путешествия
         curl --location 'http://127.0.0.1:8088/api/travel_cost' \
         --header 'Content-Type: application/json' \
         --data '{
