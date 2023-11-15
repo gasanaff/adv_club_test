@@ -31,19 +31,6 @@ services:
     networks:
         - adv-test-network
 
-  phppgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    ports:
-      - "5055:80"
-    depends_on:
-      - postgres
-    networks:
-        - adv-test-network
-
 networks:
     adv-test-network:
         driver: bridge
