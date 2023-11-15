@@ -1,0 +1,49 @@
+version: "3.5"
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: adv-test-nginx
+    working_dir: /application
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ../:/application
+    ports:
+      - '8088:80'
+    depends_on:
+      - php-fpm
+    networks:
+      - adv-test-network
+
+  php-fpm:
+    build: php
+    container_name: adv-test-php-fpm
+    working_dir: /application
+    volumes:
+      - ../:/application
+      - ./php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+
+    ports:
+      - '9000'
+    links:
+      - postgres
+    networks:
+        - adv-test-network
+
+  phppgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5055:80"
+    depends_on:
+      - postgres
+    networks:
+        - adv-test-network
+
+networks:
+    adv-test-network:
+        driver: bridge
