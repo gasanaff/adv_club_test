@@ -26,8 +26,6 @@ services:
 
     ports:
       - '9000'
-    links:
-      - postgres
     networks:
         - adv-test-network
 
